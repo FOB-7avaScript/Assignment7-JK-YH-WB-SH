@@ -15,5 +15,6 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     'no-use-before-define': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off',
   },
 };

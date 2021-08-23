@@ -1,4 +1,4 @@
-# Wanted Front-end onBoarding # 7
+# Wanted Front-end onBoarding # 8
 
 ## Demo Link
 🔗 Demo Page :
@@ -10,7 +10,7 @@
 ## 😀 프로젝트 Memebers
 |이름|GitHub|담당|
 |------|---|---|
-|이제경|[jejelee94’](https://github.com/jejelee94)|xx|
+|이제경|[jejelee94](https://github.com/jejelee94)|xx|
 |한우빈|[hwb0218](https://github.com/hwb0218)|xx|
 |이상훈|[simoniful](https://github.com/simoniful) |xx|
 |장윤호|[yunojang](https://github.com/yunojang)|xx|
@@ -38,79 +38,60 @@
 
 ## 👍🏻 구현 기능 상세
 
-완료 기한을 포함한 To-Do 리스트 완성
-생성, 삭제 및 완료 상태 전환 기능 구현
+간단한 투두리스트 애플리케이션에 적합한 UI/UX를 구성할 수 있다.
 
-### 1. 기본 요구 사항
+간단한 투두리스트 애플리케이션에 적합한 데이터 구조를 정의하고 조작할 수 있다.
 
-> - TypeScript 사용 환경 구성 및 기능 구현
-> - LocalStorage를 사용해서 리스트 관리
-> - ant.design 라이브러리 사용 숙달
-> - 버그 수정 및 개선점 도출
+### 1. 필수 요구 사항
+
+> - 투두리스트에 적합한 기능을 구현하기 위해 데이터를 조작할 수 있다.
+> - 적절한 header를 만들고, 스크롤시 Header가 사라지지 않고 화면 상단에 고정되도록 한다.
+> - 투두리스트에 적절한 애니메이션을 추가할 수 있다(Drag and Drop으로 Task의 순서를 변경한다)
+> - 필수 기능: Task 목록 조회 / 새로운 Task 추가 / Task 삭제
+> - 최소 두가지 이상의 조건으로 Task를 필터링 (ex. 상태, 생성일, 생성자, 중요도)
+> - Task의 상태 변경 (ex. 진행중 → 완료)
+
+### 2. 추가 요구 사항
+> -  필수 구현 항목에 덧붙여 필요한 **데이터 속성을 추가하여 정의**할 수 있다
+> -  최소 요구사항에 덧붙여 구현하고 싶은 기능이 있으면 추가적으로 구현.
+> -  최소 요구사항에 덧붙여 추가하고 싶은 UI/UX 및 애니매이션을 추가적으로 구현.
+> -  최소 요구사항에 덧붙여 필요한 데이터 속성을 추가하여 정의할 수 있다
+> -  최소 요구사항에 덧붙여 구현하고 싶은 기능이 있으면 추가적으로 구현.
+> -  최소 요구사항에 덧붙여 추가하고 싶은 투두리스트에 적절한 UI/UX를 추가할 수 있다.
 
 > ### 과제 구현 목록
 >
-> - [x] 베이스 코드 기반 버그 수정
-> - [x] ReactJS 기반으로 작성, TypeScript 사용 환경 구성
-> - [x] 주어진 모듈과 그 기능만을 사용하며, 주어진 라이브러리 외에 추가로 사용하지 않도록 주의
-> - [x] 완성 후 기능 추가, 버그 수정하기
-> - [x] 예외 상황 modal 작동
-> - [x] Notion 개선사항 및 로그인 관련 작성
+> - [x] 투두리스트에 적합한 기능을 구현하기 위해 데이터를 조작
+> - [x] 스크롤 시 Header가 사라지지 않고 화면 상단에 고정
+> - [x] 필수적으로 추가해야할 기능: Task 목록 조회, 새로운 Task 추가, Task 삭제
+> - [x] 투두리스트에 적절한 애니메이션을 추가(Drag and Drop으로 Task의 순서를 변경한다)
+> - [x] 최소 두가지 이상의 조건으로 Task를 필터링 (ex. 상태, 생성일, 생성자, 중요도)
+> - [x] Task의 상태 변경 (ex. 진행중 → 완료)
+> - [x] 버그 수정
 
 ### 2. 공통 컴포넌트 와 프로젝트 구조
 
 #### 프로젝트 구조
 
 ```html
-📦src
- ┣ 📂components
- ┃ ┣ 📂common
- ┃ ┃ ┣ 📜Loading.tsx
- ┃ ┃ ┗ 📜Spinner.tsx
- ┃ ┗ 📂todo
- ┃ ┃ ┣ 📂template
- ┃ ┃ ┃ ┣ 📂create
- ┃ ┃ ┃ ┃ ┗ 📜TodoCreate.tsx
- ┃ ┃ ┃ ┣ 📂footer
- ┃ ┃ ┃ ┃ ┗ 📜TodoFooter.tsx
- ┃ ┃ ┃ ┣ 📂head
- ┃ ┃ ┃ ┃ ┗ 📜TodoHead.tsx
- ┃ ┃ ┃ ┣ 📂list
- ┃ ┃ ┃ ┃ ┣ 📂item
- ┃ ┃ ┃ ┃ ┃ ┗ 📜TodoItem.tsx
- ┃ ┃ ┃ ┃ ┗ 📜TodoList.tsx
- ┃ ┃ ┃ ┗ 📜TodoTemplate.tsx
- ┃ ┃ ┣ 📜TodoContainer.tsx
- ┃ ┃ ┗ 📜TodoService.tsx
- ┣ 📜.eslintignore
- ┣ 📜.eslintrc.js
- ┣ 📜.prettierrc
- ┣ 📜App.tsx
- ┣ 📜index.js
- ┗ 📜react-app-env.d.ts
+
 ```
 
 #### 공통 component
 
-> - Loading, Spinner
-> - TodoService 내 customHook
+> - Header, Layout 등 공통
+> - customHook 활용 추상화
 
 ### 3. 상세 기능
 
-#### 데이터 순번이 꼬이지 않도록 queue의 자료구조를 기반으로 local storage 관리 로직 구현
+#### To-Do List App 만들기 (UI)
 
-> - 리스트 생성, 삭제 시 데이터 Index 업데이트
 
-#### ant.design 라이브러리를 활용하여 날짜 객체 관리 및 모달 구현
+#### To-Do List App만들기 (Data)
 
-> - DatePicker를 이용한 완료 목표일 설정 및 UI 구현
-> - 예외 상황(기입 데이터가 없을 시, 리스트 삭제 시) 모달을 띄워 사용자가 확인할 수 있도록 UI 구현
 
 #### 버그 수정
 
-> - 삭제 관련 로직 수정(이전 상태 값 비교 및 필터를 통한 구현과 데이터 업데이트를 통한 충돌 수정)
-> - 상태 default 값 수정
-> - local storage 관리 로직 구현을 통한 초기 로딩 및 추가/삭제에 대한 버그 수정
 
 ## Reference
 
