@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# Wanted Front-end onBoarding # 7
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo Link
+🔗 Demo Page :
 
-## Available Scripts
 
-In the project directory, you can run:
+## 💬 프로젝트 개요
+모두 컴퍼니 : To-Do-List 애플리케이션
 
-### `npm start`
+## 😀 프로젝트 Memebers
+|이름|GitHub|담당|
+|------|---|---|
+|이제경|[jejelee94’](https://github.com/jejelee94)|xx|
+|한우빈|[hwb0218](https://github.com/hwb0218)|xx|
+|이상훈|[simoniful](https://github.com/simoniful) |xx|
+|장윤호|[yunojang](https://github.com/yunojang)|xx|
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🪄 실행 방법
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Project setup
+`npm install`
+#### Compiles and hot-reloads for development
+`npm run serve`
+#### Compiles and minifies for production
+`npm run build`
 
-### `npm test`
+## 🔧 Skills
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React, React Router, Styled Components, ES6+, TS
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🐱‍👤 협업 Tool
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Slack, Git-Hub
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🎬 기능구현 데모
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 👍🏻 구현 기능 상세
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+완료 기한을 포함한 To-Do 리스트 완성
+생성, 삭제 및 완료 상태 전환 기능 구현
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 1. 기본 요구 사항
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> - TypeScript 사용 환경 구성 및 기능 구현
+> - LocalStorage를 사용해서 리스트 관리
+> - ant.design 라이브러리 사용 숙달
+> - 버그 수정 및 개선점 도출
 
-## Learn More
+> ### 과제 구현 목록
+>
+> - [x] 베이스 코드 기반 버그 수정
+> - [x] ReactJS 기반으로 작성, TypeScript 사용 환경 구성
+> - [x] 주어진 모듈과 그 기능만을 사용하며, 주어진 라이브러리 외에 추가로 사용하지 않도록 주의
+> - [x] 완성 후 기능 추가, 버그 수정하기
+> - [x] 예외 상황 modal 작동
+> - [x] Notion 개선사항 및 로그인 관련 작성
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. 공통 컴포넌트 와 프로젝트 구조
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 프로젝트 구조
 
-### Code Splitting
+```html
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜Loading.tsx
+ ┃ ┃ ┗ 📜Spinner.tsx
+ ┃ ┗ 📂todo
+ ┃ ┃ ┣ 📂template
+ ┃ ┃ ┃ ┣ 📂create
+ ┃ ┃ ┃ ┃ ┗ 📜TodoCreate.tsx
+ ┃ ┃ ┃ ┣ 📂footer
+ ┃ ┃ ┃ ┃ ┗ 📜TodoFooter.tsx
+ ┃ ┃ ┃ ┣ 📂head
+ ┃ ┃ ┃ ┃ ┗ 📜TodoHead.tsx
+ ┃ ┃ ┃ ┣ 📂list
+ ┃ ┃ ┃ ┃ ┣ 📂item
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TodoItem.tsx
+ ┃ ┃ ┃ ┃ ┗ 📜TodoList.tsx
+ ┃ ┃ ┃ ┗ 📜TodoTemplate.tsx
+ ┃ ┃ ┣ 📜TodoContainer.tsx
+ ┃ ┃ ┗ 📜TodoService.tsx
+ ┣ 📜.eslintignore
+ ┣ 📜.eslintrc.js
+ ┣ 📜.prettierrc
+ ┣ 📜App.tsx
+ ┣ 📜index.js
+ ┗ 📜react-app-env.d.ts
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### 공통 component
 
-### Analyzing the Bundle Size
+> - Loading, Spinner
+> - TodoService 내 customHook
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 3. 상세 기능
 
-### Making a Progressive Web App
+#### 데이터 순번이 꼬이지 않도록 queue의 자료구조를 기반으로 local storage 관리 로직 구현
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> - 리스트 생성, 삭제 시 데이터 Index 업데이트
 
-### Advanced Configuration
+#### ant.design 라이브러리를 활용하여 날짜 객체 관리 및 모달 구현
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> - DatePicker를 이용한 완료 목표일 설정 및 UI 구현
+> - 예외 상황(기입 데이터가 없을 시, 리스트 삭제 시) 모달을 띄워 사용자가 확인할 수 있도록 UI 구현
 
-### Deployment
+#### 버그 수정
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> - 삭제 관련 로직 수정(이전 상태 값 비교 및 필터를 통한 구현과 데이터 업데이트를 통한 충돌 수정)
+> - 상태 default 값 수정
+> - local storage 관리 로직 구현을 통한 초기 로딩 및 추가/삭제에 대한 버그 수정
 
-### `npm run build` fails to minify
+## Reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 이 프로젝트는 [모두컴퍼니](https://www.moduparking.com/)의 과제전형을 참조하여 학습목적으로 만들었습니다.
+- 이 프로젝트에서 사용하고 있는 data는 모두컴퍼니 측에서 제공받았습니다.
+
+---
