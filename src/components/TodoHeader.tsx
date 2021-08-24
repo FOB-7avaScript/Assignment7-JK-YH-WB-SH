@@ -12,6 +12,8 @@ const TodoHeader: FC<Props> = (props) => {
   const [dueDate, setDueDate] = useState<moment.Moment | null>(moment());
   const [focused, setFocused] = useState<boolean>(false);
 
+  const handleChange = () => {};
+
   return (
     <HeaderWrap>
       <HeaderForm>
