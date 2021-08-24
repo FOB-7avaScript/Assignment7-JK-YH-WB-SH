@@ -24,6 +24,9 @@ const TodoHeader: FC<Props> = (props) => {
           focused={focused} // PropTypes.bool
           onFocusChange={({ focused }) => setFocused(focused)} // PropTypes.func.isRequired
           id="your_unique_id" // PropTypes.string.isRequired,
+          numberOfMonths={1}
+          displayFormat={'YYYY.MM.DD'}
+          hideKeyboardShortcutsPanel
         />
         <CircleButton>
           <i className="fas fa-plus-circle"></i>
