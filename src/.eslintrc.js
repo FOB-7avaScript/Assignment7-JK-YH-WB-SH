@@ -16,5 +16,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
 };
