@@ -6,9 +6,10 @@ interface TodoListProps {
   todos: Itodo[];
   toggleTodo: (id: number) => void;
   removeTodo: (id: number) => void;
+  changeTodo: (id: number) => void;
 }
 
-const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos }) => {
+const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo }) => {
   const handleRemove = (id: number, todo: Itodo) => {
     if (window.confirm('삭제하시겠습니까?')) {
       removeTodo(id);
@@ -23,7 +24,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos }) => {
           <TodoItem key={idx}>
             <FlexContainer>
               <FlexBox>
-                <StatusBtn done={todo.status} onClick={() => toggleTodo(todo.id)}>
+                <StatusBtn done={todo.status} onClick={() => changeTodo(todo.id)}>
                   {(todo.status === 0 && <i className="fas fa-stopwatch" />) ||
                     (todo.status === 1 && <i className="fas fa-play-circle" />) ||
                     (todo.status === 2 && <i className="fas fa-stop-circle" />)}
@@ -43,7 +44,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos }) => {
               <button onClick={() => handleRemove(todo.id, todo)}>
                 <i className="fas fa-trash-alt" />
               </button>
-              <button>{todo.isImportant ? <i className="fas fa-star" /> : <i className="far fa-star" />}</button>
+              <button onClick={() => toggleTodo(todo.id)}>{todo.isImportant ? <i className="fas fa-star" /> : <i className="far fa-star" />}</button>
             </div>
           </TodoItem>
         ))}

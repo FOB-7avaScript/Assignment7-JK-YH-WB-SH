@@ -8,12 +8,12 @@ import { useTodo } from 'hooks/useTodo';
 interface Props {}
 
 const TodoContainer: FC<Props> = () => {
-  const { todoState, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo } = useTodo();
+  const { todoState, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo, changeTodo } = useTodo();
 
   return (
     <TodoWrap>
       <TodoHeader nextId={nextIdState} createTodo={createTodo} incrementNextId={incrementNextId} />
-      <TodoList todos={todoState} toggleTodo={toggleTodo} removeTodo={removeTodo} />
+      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
       <TodoFooter todos={todoState} />
     </TodoWrap>
   );

@@ -19,11 +19,14 @@ export const useTodo = () => {
     setNextIdState(nextIdState + 1);
   };
 
-  const toggleTodo = (id: number) => {
+  const changeTodo = (id: number) => {
     setTodoState((prevState) =>
       prevState.map((todo) => (todo.id === id ? (todo.status === 2 ? { ...todo, status: 0 } : { ...todo, status: todo.status + 1 }) : todo)),
     );
-    console.log(id, todoState);
+  };
+
+  const toggleTodo = (id: number) => {
+    setTodoState((prevState) => prevState.map((todo) => (todo.id === id ? { ...todo, isImportant: !todo.isImportant } : todo)));
   };
 
   const removeTodo = (id: number) => {
@@ -62,6 +65,7 @@ export const useTodo = () => {
     todoState,
     nextIdState,
     incrementNextId,
+    changeTodo,
     toggleTodo,
     removeTodo,
     createTodo,
