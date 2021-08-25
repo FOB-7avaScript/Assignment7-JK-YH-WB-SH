@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Itodo } from './types';
+import { Itodo, Status } from './types';
 
 interface Props {
   todoState: Itodo[];
@@ -54,13 +54,13 @@ const TodoHeader: FC<Props> = ({ todoState, sortedState, chekedCategory, setSort
         setSortedState(todoState);
         break;
       case 'todo':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === 0));
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.NOT_STARTED));
         break;
       case 'inProgress':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === 1));
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.ONGOING));
         break;
       case 'done':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === 2));
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.FINISHED));
         break;
       default:
     }
