@@ -18,7 +18,7 @@ const TodoHeader: FC<Props> = (props) => {
     <HeaderWrap>
       <HeaderForm>
         <Input type="text"></Input>
-        <StyledSingleDatePicker
+        <SingleDatePicker
           date={dueDate} // momentPropTypes.momentObj or null
           onDateChange={(date) => setDueDate(date)} // PropTypes.func.isRequired
           focused={focused} // PropTypes.bool
@@ -34,8 +34,8 @@ const TodoHeader: FC<Props> = (props) => {
       </HeaderForm>
       <TabWrap>
         <li>전체</li>
-        {Object.values(Status).map((el) => (
-          <li>{el}</li>
+        {Object.values(Status).map((el, idx) => (
+          <li key={idx}>{el}</li>
         ))}
       </TabWrap>
       <ControlBox>
@@ -95,13 +95,6 @@ const CircleButton = styled.button`
   justify-content: center;
   .fa-plus-circle {
     color: #33bb77;
-  }
-`;
-
-const StyledSingleDatePicker = styled(SingleDatePicker)`
-  .DateInput {
-    height: 50px;
-    background: inherit;
   }
 `;
 
