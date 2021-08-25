@@ -1,7 +1,7 @@
 export enum Status {
-  NOT_STARTED = '예정',
-  ONGOING = '진행중',
-  FINISHED = '완료',
+  NOT_STARTED,
+  ONGOING,
+  FINISHED,
 }
 
 export interface Itodo {
