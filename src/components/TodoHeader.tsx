@@ -4,26 +4,49 @@ import styled from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Status } from './types';
+import { Status, Itodo } from './types';
 
-interface Props {}
+interface TodoCreateProps {
+  nextId: number;
+  createTodo: (todo: Itodo) => void;
+  incrementNextId: () => void;
+}
 
-const TodoHeader: FC<Props> = (props) => {
+const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId }) => {
+  const [value, setValue] = useState('');
   const [dueDate, setDueDate] = useState<moment.Moment | null>(moment());
   const [focused, setFocused] = useState<boolean>(false);
 
-  const handleChange = () => {};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!value) {
+      alert('할 일을 작성해주세요.');
+      return null;
+    }
+    createTodo({
+      id: nextId,
+      taskName: value,
+      status: Status.ToDo,
+      dueDate: dueDate?.format('YYYY-MM-DD'),
+      createdAt: moment().format('YYYY-MM-DD'),
+      updatedAt: moment().format('YYYY-MM-DD'),
+      isImportant: false,
+    });
+    incrementNextId();
+    setValue('');
+  };
 
   return (
     <HeaderWrap>
-      <HeaderForm>
-        <Input type="text"></Input>
+      <HeaderForm onSubmit={handleSubmit}>
+        <Input autoFocus placeholder="What's need to be done?" type="text" value={value} onChange={handleChange} />
         <SingleDatePicker
-          date={dueDate} // momentPropTypes.momentObj or null
-          onDateChange={(date) => setDueDate(date)} // PropTypes.func.isRequired
-          focused={focused} // PropTypes.bool
-          onFocusChange={({ focused }) => setFocused(focused)} // PropTypes.func.isRequired
-          id="your_unique_id" // PropTypes.string.isRequired,
+          date={dueDate}
+          onDateChange={(date) => setDueDate(date)}
+          focused={focused}
+          onFocusChange={({ focused }) => setFocused(focused)}
+          id="datepicker"
           numberOfMonths={1}
           displayFormat={'YYYY.MM.DD'}
           hideKeyboardShortcutsPanel
@@ -33,10 +56,10 @@ const TodoHeader: FC<Props> = (props) => {
         </CircleButton>
       </HeaderForm>
       <TabWrap>
-        <li>전체</li>
-        {Object.values(Status).map((el, idx) => (
-          <li key={idx}>{el}</li>
-        ))}
+        <li>All</li>
+        <li>To-Do</li>
+        <li>In-Progress</li>
+        <li>Done</li>
       </TabWrap>
       <ControlBox>
         <div>

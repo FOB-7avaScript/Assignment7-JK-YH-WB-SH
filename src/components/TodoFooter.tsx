@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { Itodo } from './types';
 
-interface Props {}
+interface HooksTodoHeadProps {
+  todos: Itodo[];
+}
 
-const TodoFooter: FC<Props> = (props) => {
+const TodoFooter: FC<HooksTodoHeadProps> = ({ todos }: HooksTodoHeadProps) => {
+  const undoneTasks = todos?.filter((todo) => todo.status !== 2);
   return (
     <FooterWrap>
-      <DisplayLeft className="tasks-left">items left</DisplayLeft>
+      <DisplayLeft className="tasks-left">{undoneTasks?.length} items left</DisplayLeft>
     </FooterWrap>
   );
 };
