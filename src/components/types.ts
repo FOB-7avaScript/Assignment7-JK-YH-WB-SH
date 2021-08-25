@@ -7,7 +7,7 @@ export enum Status {
 export interface Itodo {
   id: number;
   taskName: string;
-  status: Status;
+  status: Number;
   createdAt: string;
   updatedAt: string;
   isImportant: boolean;
