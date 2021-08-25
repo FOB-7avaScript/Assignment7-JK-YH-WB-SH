@@ -1,14 +1,15 @@
 export enum Status {
-  NOT_STARTED = 0,
-  ONGOING = 1,
-  FINISHED = 2,
+  ToDo = 0,
+  Doing = 1,
+  Done = 2,
 }
 
 export interface Itodo {
   id: number;
   taskName: string;
   status: Status;
-  createdAt: string;
-  updatedAt: string;
+  dueDate: string | undefined;
+  createdAt: string | undefined;
+  updatedAt: string | undefined;
   isImportant: boolean;
 }
