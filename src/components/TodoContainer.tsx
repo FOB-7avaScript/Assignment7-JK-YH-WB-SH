@@ -1,41 +1,17 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import TodoHeader from './TodoHeader';
 import TodoList from './TodoList';
 import TodoFooter from './TodoFooter';
-import { useTodo } from 'hooks/useTodo';
 
 interface Props {}
 
-const TodoContainer: FC<Props> = () => {
-  const {
-    todoState,
-    sortedState,
-    setSortedState,
-    chekedCategory,
-    setChekedCategory,
-    nextIdState,
-    incrementNextId,
-    toggleTodo,
-    removeTodo,
-    createTodo,
-    changeTodo,
-  } = useTodo();
-
+const TodoContainer: FC<Props> = (props) => {
   return (
     <TodoWrap>
-      <TodoHeader
-        nextId={nextIdState}
-        createTodo={createTodo}
-        incrementNextId={incrementNextId}
-        todoState={todoState}
-        sortedState={sortedState}
-        setSortedState={setSortedState}
-        chekedCategory={chekedCategory}
-        setChekedCategory={setChekedCategory}
-      />
-      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
-      <TodoFooter todos={todoState} />
+      <TodoHeader />
+      <TodoList />
+      <TodoFooter />
     </TodoWrap>
   );
 };
@@ -51,7 +27,7 @@ const TodoWrap = styled.div`
   background: white;
   border-radius: 30px;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.1);
-  margin: 0px auto;
+  margin: 96px auto 32px;
   display: flex;
   flex-direction: column;
 `;
