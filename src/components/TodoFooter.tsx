@@ -6,7 +6,7 @@ interface HooksTodoHeadProps {
   todos: Itodo[];
 }
 
-const TodoFooter: FC<HooksTodoHeadProps> = ({ todos }: HooksTodoHeadProps) => {
+const TodoFooter: FC<HooksTodoHeadProps> = ({ todos }) => {
   const undoneTasks = todos?.filter((todo) => todo.status !== 2);
   return (
     <FooterWrap>

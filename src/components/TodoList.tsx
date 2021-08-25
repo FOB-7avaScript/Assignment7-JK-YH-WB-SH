@@ -25,9 +25,9 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
             <FlexContainer>
               <FlexBox>
                 <StatusBtn done={todo.status} onClick={() => changeTodo(todo.id)}>
-                  {(todo.status === 0 && <i className="fas fa-stopwatch" />) ||
-                    (todo.status === 1 && <i className="fas fa-play-circle" />) ||
-                    (todo.status === 2 && <i className="fas fa-stop-circle" />)}
+                  {(todo.status === Status.ToDo && <i className="fas fa-stopwatch" />) ||
+                    (todo.status === Status.Doing && <i className="fas fa-play-circle" />) ||
+                    (todo.status === Status.Done && <i className="fas fa-stop-circle" />)}
                 </StatusBtn>
               </FlexBox>
               <FlexBox>

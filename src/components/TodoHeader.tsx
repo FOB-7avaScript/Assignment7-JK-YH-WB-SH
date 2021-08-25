@@ -41,16 +41,18 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId }
     <HeaderWrap>
       <HeaderForm onSubmit={handleSubmit}>
         <Input autoFocus placeholder="What's need to be done?" type="text" value={value} onChange={handleChange} />
-        <SingleDatePicker
-          date={dueDate}
-          onDateChange={(date) => setDueDate(date)}
-          focused={focused}
-          onFocusChange={({ focused }) => setFocused(focused)}
-          id="datepicker"
-          numberOfMonths={1}
-          displayFormat={'YYYY.MM.DD'}
-          hideKeyboardShortcutsPanel
-        />
+        <StyledWrapper>
+          <SingleDatePicker
+            date={dueDate}
+            onDateChange={(date) => setDueDate(date)}
+            focused={focused}
+            onFocusChange={({ focused }) => setFocused(focused)}
+            id="datepicker"
+            numberOfMonths={1}
+            displayFormat={'YYYY.MM.DD'}
+            hideKeyboardShortcutsPanel
+          />
+        </StyledWrapper>
         <CircleButton>
           <i className="fas fa-plus-circle"></i>
         </CircleButton>
@@ -62,10 +64,10 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId }
         <li>Done</li>
       </TabWrap>
       <ControlBox>
-        <div>
+        <ImporatantCheck>
           <input type="checkbox" id="important" />
           <label htmlFor="important">중요 항목만 보기</label>
-        </div>
+        </ImporatantCheck>
         <div>
           <select>
             <option>최신순</option>
@@ -84,19 +86,20 @@ const HeaderWrap = styled.div`
 
 const HeaderForm = styled.form`
   display: flex;
-  padding: 40px 40px 40px 30px;
+  padding: 40px 50px 40px 30px;
 `;
 
 const Input = styled.input`
   padding: 10px;
   border: 1px solid #dddddd;
   width: 70%;
+  line-height: 20px;
   outline: none;
   font-size: 14px;
   color: #119955;
   &::placeholder {
     color: #dddddd;
-    font-size: 12px;
+    font-size: 16px;
   }
 `;
 
@@ -138,6 +141,38 @@ const ControlBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px;
+  label {
+    padding-left: 8px;
+  }
+`;
+
+const StyledWrapper = styled.div`
+  .SingleDatePickerInput__withBorder {
+    height: 52px;
+  }
+  .DateInput {
+    height: 50px;
+  }
+  .DateInput_input {
+    font-size: 16px;
+    line-height: 28px;
+  }
+  .DateInput_input__focused {
+    border-bottom: 2px solid #33bb77;
+  }
+  .CalendarDay__selected,
+  .CalendarDay__selected:active,
+  .CalendarDay__selected:hover {
+    background-color: #33bb77;
+  }
+  .CalendarDay {
+    vertical-align: middle;
+  }
+`;
+
+const ImporatantCheck = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default TodoHeader;
