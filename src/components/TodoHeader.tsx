@@ -1,146 +1,47 @@
 import moment from 'moment';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Itodo, Status } from './types';
+import { Status } from './types';
 
-interface TodoCreateProps {
-  nextId: number;
-  createTodo: (todo: Itodo) => void;
-  incrementNextId: () => void;
-  todoState: Itodo[];
-  sortedState: Itodo[];
-  chekedCategory: string | null;
-  setSortedState: React.Dispatch<React.SetStateAction<Itodo[]>>;
-  setChekedCategory: React.Dispatch<React.SetStateAction<string | null>>;
-}
+interface Props {}
 
-const TodoHeader: FC<TodoCreateProps> = ({
-  nextId,
-  createTodo,
-  incrementNextId,
-  todoState,
-  sortedState,
-  chekedCategory,
-  setSortedState,
-  setChekedCategory,
-}) => {
-  const [value, setValue] = useState('');
+const TodoHeader: FC<Props> = (props) => {
   const [dueDate, setDueDate] = useState<moment.Moment | null>(moment());
   const [focused, setFocused] = useState<boolean>(false);
-  const [checked, setChecked] = useState<boolean>(false);
-  const [notImportantTodo, setNotImportantTodo] = useState<Itodo[]>([]);
-
-  const handleSelectBox = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.currentTarget;
-    const copyTodo = [...sortedState];
-
-    if (value === 'newest') {
-      copyTodo.sort((a: any, b: any) => a.createdAt.localeCompare(b.createdAt));
-      setSortedState(copyTodo);
-    }
-    if (value === 'oldest') {
-      copyTodo.sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
-      setSortedState(copyTodo);
-    }
-  };
-
-  const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.currentTarget;
-    if (checked) {
-      setChecked(true);
-      const filteredImportantTodos = sortedState.filter((todo: Itodo) => todo.isImportant);
-      const filterednotImportantTodos = sortedState.filter((todo: Itodo) => !todo.isImportant);
-      setNotImportantTodo(filterednotImportantTodos);
-      setSortedState(filteredImportantTodos);
-    } else {
-      setChecked(false);
-      setSortedState((prev) => prev.concat(notImportantTodo));
-    }
-  };
-
-  const showRelatedTodo = (category: string | null) => {
-    switch (category) {
-      case 'all':
-        setSortedState(todoState);
-        break;
-      case 'ToDo':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.ToDo));
-        break;
-      case 'Doing':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.Doing));
-        break;
-      case 'Done':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.Done));
-        break;
-      default:
-    }
-  };
-
-  const handleMenuCategory = (e: React.MouseEvent<HTMLLIElement>) => {
-    const { textContent } = e.currentTarget;
-    if (textContent === chekedCategory) return;
-    setChecked(false);
-    setChekedCategory(textContent);
-    showRelatedTodo(textContent);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!value) {
-      alert('할 일을 작성해주세요.');
-      return null;
-    }
-    createTodo({
-      id: nextId,
-      taskName: value,
-      status: Status.ToDo,
-      dueDate: dueDate?.format('YYYY-MM-DD'),
-      createdAt: moment().format('YYYY-MM-DD'),
-      updatedAt: moment().format('YYYY-MM-DD'),
-      isImportant: false,
-    });
-    incrementNextId();
-    setValue('');
-  };
 
   return (
     <HeaderWrap>
-      <HeaderForm onSubmit={handleSubmit}>
-        <Input autoFocus placeholder="What's need to be done?" type="text" value={value} onChange={handleChange} />
-        <StyledWrapper>
-          <SingleDatePicker
-            date={dueDate}
-            onDateChange={(date) => setDueDate(date)}
-            focused={focused}
-            onFocusChange={({ focused }) => setFocused(focused)}
-            id="datepicker"
-            numberOfMonths={1}
-            displayFormat={'YYYY.MM.DD'}
-            hideKeyboardShortcutsPanel
-          />
-        </StyledWrapper>
+      <HeaderForm>
+        <Input type="text"></Input>
+        <StyledSingleDatePicker
+          date={dueDate} // momentPropTypes.momentObj or null
+          onDateChange={(date) => setDueDate(date)} // PropTypes.func.isRequired
+          focused={focused} // PropTypes.bool
+          onFocusChange={({ focused }) => setFocused(focused)} // PropTypes.func.isRequired
+          id="your_unique_id" // PropTypes.string.isRequired,
+        />
         <CircleButton>
           <i className="fas fa-plus-circle"></i>
         </CircleButton>
       </HeaderForm>
       <TabWrap>
-        {menuCategories.map((category) => (
-          <li onClick={handleMenuCategory}>{category}</li>
+        <li>전체</li>
+        {Object.values(Status).map((el) => (
+          <li>{el}</li>
         ))}
       </TabWrap>
       <ControlBox>
-        <ImporatantCheck>
-          <input type="checkbox" id="important" checked={checked} onChange={handleCheckBox} />
-          <label htmlFor="important">중요 항목만 보기</label>
-        </ImporatantCheck>
         <div>
-          <select onChange={handleSelectBox}>
-            <option value="newest">최신순</option>
-            <option value="oldest">오래된순</option>
+          <input type="checkbox" id="important" />
+          <label htmlFor="important">중요 항목만 보기</label>
+        </div>
+        <div>
+          <select>
+            <option>최신순</option>
+            <option>오래된순</option>
           </select>
         </div>
       </ControlBox>
@@ -155,20 +56,19 @@ const HeaderWrap = styled.div`
 
 const HeaderForm = styled.form`
   display: flex;
-  padding: 40px 50px 40px 30px;
+  padding: 40px 40px 40px 30px;
 `;
 
 const Input = styled.input`
   padding: 10px;
   border: 1px solid #dddddd;
   width: 70%;
-  line-height: 20px;
   outline: none;
   font-size: 14px;
   color: #119955;
   &::placeholder {
     color: #dddddd;
-    font-size: 16px;
+    font-size: 12px;
   }
 `;
 
@@ -193,6 +93,13 @@ const CircleButton = styled.button`
   }
 `;
 
+const StyledSingleDatePicker = styled(SingleDatePicker)`
+  .DateInput {
+    height: 50px;
+    background: inherit;
+  }
+`;
+
 const TabWrap = styled.ul`
   display: flex;
   justify-content: space-around;
@@ -210,40 +117,6 @@ const ControlBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px;
-  label {
-    padding-left: 8px;
-  }
 `;
-
-const StyledWrapper = styled.div`
-  .SingleDatePickerInput__withBorder {
-    height: 52px;
-  }
-  .DateInput {
-    height: 50px;
-  }
-  .DateInput_input {
-    font-size: 16px;
-    line-height: 28px;
-  }
-  .DateInput_input__focused {
-    border-bottom: 2px solid #33bb77;
-  }
-  .CalendarDay__selected,
-  .CalendarDay__selected:active,
-  .CalendarDay__selected:hover {
-    background-color: #33bb77;
-  }
-  .CalendarDay {
-    vertical-align: middle;
-  }
-`;
-
-const ImporatantCheck = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const menuCategories = ['all', 'todo', 'inProgress', 'done'];
 
 export default TodoHeader;
