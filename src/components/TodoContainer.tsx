@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import TodoHeader from './TodoHeader';
 import TodoList from './TodoList';
 import TodoFooter from './TodoFooter';
+import useTodo from 'hooks/useTodo';
 
 interface Props {}
 
-const TodoContainer: FC<Props> = (props) => {
+const TodoContainer: FC<Props> = () => {
+  const { todoState, sortedState, setSortedState, chekedCategory, setChekedCategory } = useTodo();
+
   return (
     <TodoWrap>
-      <TodoHeader />
+      <TodoHeader {...{ todoState, sortedState, setSortedState, chekedCategory, setChekedCategory }} />
       <TodoList />
       <TodoFooter />
     </TodoWrap>

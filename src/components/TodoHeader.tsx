@@ -1,16 +1,78 @@
 import moment from 'moment';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { Status } from './types';
+import { Itodo } from './types';
 
-interface Props {}
+interface Props {
+  todoState: Itodo[];
+  sortedState: Itodo[];
+  chekedCategory: string | null;
+  setSortedState: React.Dispatch<React.SetStateAction<Itodo[]>>;
+  setChekedCategory: React.Dispatch<React.SetStateAction<string | null>>;
+}
 
-const TodoHeader: FC<Props> = (props) => {
+const TodoHeader: FC<Props> = ({ todoState, sortedState, chekedCategory, setSortedState, setChekedCategory }) => {
   const [dueDate, setDueDate] = useState<moment.Moment | null>(moment());
   const [focused, setFocused] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
+  const [notImportantTodo, setNotImportantTodo] = useState<Itodo[]>([]);
+
+  const handleSelectBox = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.currentTarget;
+    const copyTodo = [...sortedState];
+
+    if (value === 'newest') {
+      copyTodo.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+      setSortedState(copyTodo);
+    }
+    if (value === 'oldest') {
+      copyTodo.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      setSortedState(copyTodo);
+    }
+  };
+
+  const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.currentTarget;
+    if (checked) {
+      setChecked(true);
+      const filteredImportantTodos = sortedState.filter((todo: Itodo) => todo.isImportant);
+      const filterednotImportantTodos = sortedState.filter((todo: Itodo) => !todo.isImportant);
+      setNotImportantTodo(filterednotImportantTodos);
+      setSortedState(filteredImportantTodos);
+    } else {
+      setChecked(false);
+      setSortedState((prev) => prev.concat(notImportantTodo));
+    }
+  };
+
+  const showRelatedTodo = (category: string | null) => {
+    switch (category) {
+      case 'all':
+        setSortedState(todoState);
+        break;
+      case 'todo':
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === 0));
+        break;
+      case 'inProgress':
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === 1));
+        break;
+      case 'done':
+        setSortedState(todoState.filter((todo: Itodo) => todo.status === 2));
+        break;
+      default:
+    }
+  };
+
+  const handleMenuCategory = (e: React.MouseEvent<HTMLLIElement>) => {
+    const { textContent } = e.currentTarget;
+    if (textContent === chekedCategory) return;
+    setChecked(false);
+    setChekedCategory(textContent);
+    showRelatedTodo(textContent);
+  };
 
   return (
     <HeaderWrap>
@@ -28,20 +90,19 @@ const TodoHeader: FC<Props> = (props) => {
         </CircleButton>
       </HeaderForm>
       <TabWrap>
-        <li>전체</li>
-        {Object.values(Status).map((el) => (
-          <li>{el}</li>
+        {menuCategories.map((category) => (
+          <li onClick={handleMenuCategory}>{category}</li>
         ))}
       </TabWrap>
       <ControlBox>
         <div>
-          <input type="checkbox" id="important" />
+          <input type="checkbox" id="important" checked={checked} onChange={handleCheckBox} />
           <label htmlFor="important">중요 항목만 보기</label>
         </div>
         <div>
-          <select>
-            <option>최신순</option>
-            <option>오래된순</option>
+          <select onChange={handleSelectBox}>
+            <option value="newest">최신순</option>
+            <option value="oldest">오래된순</option>
           </select>
         </div>
       </ControlBox>
@@ -118,5 +179,7 @@ const ControlBox = styled.div`
   justify-content: space-between;
   padding: 15px;
 `;
+
+const menuCategories = ['all', 'todo', 'inProgress', 'done'];
 
 export default TodoHeader;
