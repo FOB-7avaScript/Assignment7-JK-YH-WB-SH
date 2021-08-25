@@ -38,11 +38,11 @@ const TodoHeader: FC<TodoCreateProps> = ({
     const copyTodo = [...sortedState];
 
     if (value === 'newest') {
-      copyTodo.sort((a: Itodo | undefined, b: Itodo | undefined) => a.createdAt.localeCompare(b.createdAt));
+      copyTodo.sort((a: any, b: any) => a.createdAt.localeCompare(b.createdAt));
       setSortedState(copyTodo);
     }
     if (value === 'oldest') {
-      copyTodo.sort((a: Itodo | undefined, b: Itodo | undefined) => b.createdAt.localeCompare(a.createdAt));
+      copyTodo.sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
       setSortedState(copyTodo);
     }
   };
