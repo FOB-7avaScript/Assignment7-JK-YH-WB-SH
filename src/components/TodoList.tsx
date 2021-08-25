@@ -52,9 +52,17 @@ const TodoList: FC<Props> = (props) => {
     setTarget(null);
   };
 
-  const getDestinationIndex = (y: number): number => {
-    // destination login 수정 필요
-    return Math.floor((y - 300) / 60);
+  const getDestinationIndex = (event: React.DragEvent, y: number): number => {
+    const listTop = event.currentTarget.getBoundingClientRect().top;
+    const target = event.target as HTMLElement;
+
+    if (target.tagName === 'UL') {
+      return todos.length;
+    }
+
+    const itemHeight = target.getBoundingClientRect().height;
+
+    return Math.floor((y - listTop) / itemHeight);
   };
 
   const onDragOver = (event: React.DragEvent) => {
@@ -63,7 +71,7 @@ const TodoList: FC<Props> = (props) => {
     const targetIndex: number = todos.findIndex((todo) => todo.id === target);
     const changedTodos = Array.from(todos);
     const [targetItem] = changedTodos.splice(targetIndex, 1);
-    const destIndex = getDestinationIndex(event.clientY);
+    const destIndex = getDestinationIndex(event, event.clientY);
 
     setTodos([...changedTodos.slice(0, destIndex), targetItem, ...changedTodos.slice(destIndex)]);
   };
