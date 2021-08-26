@@ -20,6 +20,7 @@ const TodoContainer: FC<Props> = () => {
     removeTodo,
     createTodo,
     changeTodo,
+    filterTodo,
   } = useTodo();
 
   return (
@@ -33,9 +34,10 @@ const TodoContainer: FC<Props> = () => {
         setSortedState={setSortedState}
         chekedCategory={chekedCategory}
         setChekedCategory={setChekedCategory}
+        filterTodo={filterTodo}
       />
-      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
-      <TodoFooter todos={todoState} />
+      <TodoList todos={sortedState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
+      <TodoFooter todos={sortedState} />
     </TodoWrap>
   );
 };

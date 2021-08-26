@@ -15,6 +15,7 @@ interface TodoCreateProps {
   chekedCategory: string | null;
   setSortedState: React.Dispatch<React.SetStateAction<Itodo[]>>;
   setChekedCategory: React.Dispatch<React.SetStateAction<string | null>>;
+  filterTodo: (category: string | null) => void;
 }
 
 const TodoHeader: FC<TodoCreateProps> = ({
@@ -22,6 +23,7 @@ const TodoHeader: FC<TodoCreateProps> = ({
   createTodo,
   incrementNextId,
   todoState,
+  filterTodo,
   sortedState,
   chekedCategory,
   setSortedState,
@@ -61,30 +63,12 @@ const TodoHeader: FC<TodoCreateProps> = ({
     }
   };
 
-  const showRelatedTodo = (category: string | null) => {
-    switch (category) {
-      case 'all':
-        setSortedState(todoState);
-        break;
-      case 'ToDo':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.ToDo));
-        break;
-      case 'Doing':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.Doing));
-        break;
-      case 'Done':
-        setSortedState(todoState.filter((todo: Itodo) => todo.status === Status.Done));
-        break;
-      default:
-    }
-  };
-
   const handleMenuCategory = (e: React.MouseEvent<HTMLLIElement>) => {
     const { textContent } = e.currentTarget;
     if (textContent === chekedCategory) return;
     setChecked(false);
     setChekedCategory(textContent);
-    showRelatedTodo(textContent);
+    filterTodo(textContent);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
@@ -244,6 +228,6 @@ const ImporatantCheck = styled.div`
   align-items: center;
 `;
 
-const menuCategories = ['all', 'todo', 'inProgress', 'done'];
+const menuCategories = ['all', 'ToDo', 'Doing', 'Done'];
 
 export default TodoHeader;
