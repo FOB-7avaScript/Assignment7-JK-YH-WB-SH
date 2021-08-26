@@ -17,6 +17,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
       return null;
     }
   };
+
   return (
     <ListWrap>
       <StyledUl>
