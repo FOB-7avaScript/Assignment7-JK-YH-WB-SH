@@ -10,6 +10,7 @@ interface Props {}
 const TodoContainer: FC<Props> = () => {
   const {
     todoState,
+    setTodoState,
     sortedState,
     setSortedState,
     chekedCategory,
@@ -22,6 +23,13 @@ const TodoContainer: FC<Props> = () => {
     changeTodo,
   } = useTodo();
 
+  // const MAPPING_OBJ: any = {
+  //   1: <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo}  />,
+  //   2: <TodoSecondTab />,
+  //   3: <TodoThirdTab />,
+  //   4: <TodoFourthTab />,
+  // };
+
   return (
     <TodoWrap>
       <TodoHeader
@@ -29,11 +37,11 @@ const TodoContainer: FC<Props> = () => {
         createTodo={createTodo}
         incrementNextId={incrementNextId}
         todoState={todoState}
-        sortedState={sortedState}
-        setSortedState={setSortedState}
+        setTodoState={setTodoState}
         chekedCategory={chekedCategory}
         setChekedCategory={setChekedCategory}
       />
+      {/* {MAPPING_OBJ[chekedCategory]} */}
       <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
       <TodoFooter todos={todoState} />
     </TodoWrap>

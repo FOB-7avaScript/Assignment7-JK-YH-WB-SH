@@ -7,8 +7,10 @@ let initialTodos: Itodo[] = [];
 export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
   const [nextIdState, setNextIdState] = useState(0);
-  const [sortedState, setSortedState] = useState<Itodo[]>([]);
+  const [sortedState, setSortedState] = useState<Itodo[]>(initialTodos);
   const [chekedCategory, setChekedCategory] = useState<string | null>('');
+
+  console.log(todoState);
 
   // const getTodoData = async (): Promise<void> => {
   //   try {
@@ -34,6 +36,11 @@ export const useTodo = () => {
     saveData();
   }, [todoState]);
 
+  // useeffect  - [sortState]
+  // 로컬스토리지  받아온 리스트 (TodoState) 스프레드
+  // sortState 값 변경
+  // TodoState
+
   const incrementNextId = () => {
     setNextIdState(nextIdState + 1);
   };
@@ -54,6 +61,8 @@ export const useTodo = () => {
   };
 
   const createTodo = (todo: Itodo) => {
+    const newTodo = todoState.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
+    setTodoState(newTodo);
     const nextId = todoState.length;
     setTodoState((prevState) =>
       prevState.concat({
@@ -77,7 +86,8 @@ export const useTodo = () => {
   };
 
   const saveData = () => {
-    localStorage.setItem('todos', JSON.stringify(todoState));
+    const newTodo = todoState.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
+    localStorage.setItem('todos', JSON.stringify(newTodo));
   };
 
   return {
