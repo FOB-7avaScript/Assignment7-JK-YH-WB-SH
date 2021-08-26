@@ -3,7 +3,15 @@ import styled from 'styled-components';
 
 interface Props {}
 
-const TodoList: FC<Props> = (props) => {
+const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo }) => {
+  const handleRemove = (id: number, todo: Itodo) => {
+    if (window.confirm('삭제하시겠습니까?')) {
+      removeTodo(id);
+    } else {
+      return null;
+    }
+  };
+
   return (
     <ListWrap>
       <StyledUl>

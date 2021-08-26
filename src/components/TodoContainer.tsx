@@ -6,12 +6,23 @@ import TodoFooter from './TodoFooter';
 
 interface Props {}
 
-const TodoContainer: FC<Props> = (props) => {
+const TodoContainer: FC<Props> = () => {
+  const { todoState, setTodoState, chekedCategory, setChekedCategory, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo, changeTodo } =
+    useTodo();
+
   return (
     <TodoWrap>
-      <TodoHeader />
-      <TodoList />
-      <TodoFooter />
+      <TodoHeader
+        nextId={nextIdState}
+        createTodo={createTodo}
+        incrementNextId={incrementNextId}
+        todoState={todoState}
+        setTodoState={setTodoState}
+        chekedCategory={chekedCategory}
+        setChekedCategory={setChekedCategory}
+      />
+      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
+      <TodoFooter todos={todoState} />
     </TodoWrap>
   );
 };
