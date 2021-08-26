@@ -22,7 +22,7 @@ const TodoContainer: FC<Props> = () => {
         chekedCategory={chekedCategory}
         setChekedCategory={setChekedCategory}
       />
-      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} />
+      <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} setTodoState={setTodoState} />
       <TodoFooter todos={todoState} />
     </TodoWrap>
   );
