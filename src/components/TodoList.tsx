@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import TodoItem from './TodoItem';
 
 // temp mock data
-const TODOS_MOCK: any[] = [
+interface Todo {
+  id: number;
+  taskName: string;
+}
+
+const TODOS_MOCK: Todo[] = [
   {
     id: 0,
     taskName: '읽기',
@@ -38,7 +43,7 @@ const TODOS_MOCK: any[] = [
 interface Props {}
 
 const TodoList: FC<Props> = (props) => {
-  const [todos, setTodos] = useState(TODOS_MOCK);
+  const [todos, setTodos] = useState<Todo[]>(TODOS_MOCK);
   const [target, setTarget] = useState<number | null>(null);
 
   const onDragStart = (event: React.DragEvent) => {
@@ -55,7 +60,7 @@ const TodoList: FC<Props> = (props) => {
   const getDestinationIndex = (event: React.DragEvent, y: number): number => {
     const target = event.target as HTMLElement;
 
-    // 아이템이 없는 쪽에 드래그 오버
+    // 아이템 없는 쪽에 드래그 오버 할 때
     if (target.tagName === 'UL') {
       // 맨 아래
       return todos.length - 1;
@@ -67,15 +72,23 @@ const TodoList: FC<Props> = (props) => {
     return Math.floor((y - listTop) / itemHeight);
   };
 
+  const changeItemOrder = (item: Todo, destination: number): void => {
+    const targetFiltedTodos = todos.filter((todo) => todo.id !== target);
+
+    const prevTodos = targetFiltedTodos.slice(0, destination);
+    const afterTodos = targetFiltedTodos.slice(destination);
+
+    setTodos([...prevTodos, item, ...afterTodos]);
+  };
+
   const onDragOver = (event: React.DragEvent) => {
     event.preventDefault();
 
-    const targetIndex: number = todos.findIndex((todo) => todo.id === target);
-    const changedTodos = Array.from(todos);
-    const [targetItem] = changedTodos.splice(targetIndex, 1);
-    const destIndex = getDestinationIndex(event, event.clientY);
+    const targetIdx: number = todos.findIndex((todo) => todo.id === target);
+    const targetItem = todos[targetIdx];
+    const destinationIdx = getDestinationIndex(event, event.clientY);
 
-    setTodos([...changedTodos.slice(0, destIndex), targetItem, ...changedTodos.slice(destIndex)]);
+    changeItemOrder(targetItem, destinationIdx);
   };
 
   return (
