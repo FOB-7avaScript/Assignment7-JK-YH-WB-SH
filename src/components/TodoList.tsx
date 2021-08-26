@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import TodoItem from './TodoItem';
 
-// temp data
+// temp mock data
 const TODOS_MOCK: any[] = [
   {
     id: 0,
@@ -53,13 +53,15 @@ const TodoList: FC<Props> = (props) => {
   };
 
   const getDestinationIndex = (event: React.DragEvent, y: number): number => {
-    const listTop = event.currentTarget.getBoundingClientRect().top;
     const target = event.target as HTMLElement;
 
+    // 아이템이 없는 쪽에 드래그 오버
     if (target.tagName === 'UL') {
-      return todos.length;
+      // 맨 아래
+      return todos.length - 1;
     }
 
+    const listTop = event.currentTarget.getBoundingClientRect().top;
     const itemHeight = target.getBoundingClientRect().height;
 
     return Math.floor((y - listTop) / itemHeight);
