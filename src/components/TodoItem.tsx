@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  onDragStart: (event: React.DragEvent) => void;
+  onDragStart: () => void;
   onDragEnd: () => void;
-  isTarget: boolean;
+  onDragOver: () => void;
+  isDragging: boolean;
 }
 
 const TodoItem: FC<Props> = ({ children, ...props }) => {
@@ -31,15 +32,14 @@ const TodoItem: FC<Props> = ({ children, ...props }) => {
 
 export default TodoItem;
 
-const ItemBlock = styled.li<{ isTarget: boolean }>`
+const ItemBlock = styled.li<{ isDragging: boolean }>`
   display: flex;
   padding: 20px 15px;
   justify-content: space-between;
 
-  ${({ isTarget }) =>
-    isTarget &&
+  ${({ isDragging }) =>
+    isDragging &&
     `
-    opacity: .65;
     background: #ededed;
   `}
 

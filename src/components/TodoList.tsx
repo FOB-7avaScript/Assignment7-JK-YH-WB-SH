@@ -1,15 +1,15 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import TodoItem from './TodoItem';
 
 // temp mock data
-interface Todo {
+interface ITodo {
   id: number;
   taskName: string;
 }
 
-const TODOS_MOCK: Todo[] = [
+const TODOS_MOCK: ITodo[] = [
   {
     id: 0,
     taskName: '읽기',
@@ -43,59 +43,50 @@ const TODOS_MOCK: Todo[] = [
 interface Props {}
 
 const TodoList: FC<Props> = (props) => {
-  const [todos, setTodos] = useState<Todo[]>(TODOS_MOCK);
-  const [target, setTarget] = useState<number | null>(null);
+  const [todos, setTodos] = useState<ITodo[]>(TODOS_MOCK);
 
-  const onDragStart = (event: React.DragEvent) => {
-    const target = event.target as HTMLElement;
-    const id = target.dataset.id;
+  const draggingItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
 
-    setTarget(Number(id));
+  const onDragStart = (index: number) => {
+    draggingItem.current = index;
   };
 
   const onDragEnd = () => {
-    setTarget(null);
+    draggingItem.current = null;
   };
 
-  const getDestinationIndex = (event: React.DragEvent, y: number): number => {
-    const target = event.target as HTMLElement;
+  const onDragOver = (index: number) => {
+    dragOverItem.current = index;
 
-    // 아이템 없는 쪽에 드래그 오버 할 때
-    if (target.tagName === 'UL') {
-      // 맨 아래
-      return todos.length - 1;
+    if (draggingItem.current !== null) {
+      changeOrder(draggingItem.current, dragOverItem.current);
     }
-
-    const listTop = event.currentTarget.getBoundingClientRect().top;
-    const itemHeight = target.getBoundingClientRect().height;
-
-    return Math.floor((y - listTop) / itemHeight);
   };
 
-  const changeItemOrder = (item: Todo, destination: number): void => {
-    const targetFiltedTodos = todos.filter((todo) => todo.id !== target);
-
+  const changeOrder = (source: number, destination: number): void => {
+    const sourceItem = todos[source];
+    const targetFiltedTodos = todos.filter((todo, index) => index !== source);
     const prevTodos = targetFiltedTodos.slice(0, destination);
     const afterTodos = targetFiltedTodos.slice(destination);
 
-    setTodos([...prevTodos, item, ...afterTodos]);
-  };
+    draggingItem.current = dragOverItem.current;
+    dragOverItem.current = null;
 
-  const onDragOver = (event: React.DragEvent) => {
-    event.preventDefault();
-
-    const targetIdx: number = todos.findIndex((todo) => todo.id === target);
-    const targetItem = todos[targetIdx];
-    const destinationIdx = getDestinationIndex(event, event.clientY);
-
-    changeItemOrder(targetItem, destinationIdx);
+    setTodos([...prevTodos, sourceItem, ...afterTodos]);
   };
 
   return (
     <ListWrap>
-      <StyledUl onDragOver={onDragOver}>
-        {todos.map((todo) => (
-          <TodoItem key={todo.id} data-id={todo.id} onDragStart={onDragStart} onDragEnd={onDragEnd} isTarget={target === todo.id}>
+      <StyledUl>
+        {todos.map((todo, idx) => (
+          <TodoItem
+            key={todo.id}
+            onDragStart={() => onDragStart(idx)}
+            onDragEnd={onDragEnd}
+            onDragOver={() => onDragOver(idx)}
+            isDragging={idx === draggingItem.current}
+          >
             {todo.taskName}
           </TodoItem>
         ))}
