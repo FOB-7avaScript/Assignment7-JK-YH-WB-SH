@@ -46,8 +46,8 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
       setChecked(true);
       const filteredImportantTodos = todoState.filter((todo: Itodo) => todo.isImportant);
       const filterednotImportantTodos = todoState.filter((todo: Itodo) => !todo.isImportant);
-      setNotImportantTodo(filterednotImportantTodos);
       setTodoState(filteredImportantTodos);
+      setNotImportantTodo(filterednotImportantTodos);
     } else {
       setChecked(false);
       setTodoState((prev) => prev.concat(notImportantTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
