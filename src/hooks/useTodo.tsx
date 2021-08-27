@@ -18,7 +18,7 @@ export const useTodo = () => {
 
   useEffect(() => {
     saveData();
-  }, [todoState, tempTodo]);
+  }, [todoState]);
 
   const incrementNextId = () => {
     setNextIdState(nextIdState + 1);
@@ -32,20 +32,30 @@ export const useTodo = () => {
           : { ...todo, status: todo.status + 1, updatedAt: moment().format('YYYY-MM-DD') }
         : todo,
     );
+    const newTemptodos = tempTodo.map((todo) =>
+      todo.id === id
+        ? todo.status === 2
+          ? { ...todo, status: 0, updatedAt: moment().format('YYYY-MM-DD') }
+          : { ...todo, status: todo.status + 1, updatedAt: moment().format('YYYY-MM-DD') }
+        : todo,
+    );
     setTodoState(newTodos);
-    setTempTodo(newTodos);
+    setTempTodo(newTemptodos);
   };
 
   const toggleTodo = (id: number) => {
     const newTodos = todoState.map((todo) => (todo.id === id ? { ...todo, isImportant: !todo.isImportant, updatedAt: moment().format('YYYY-MM-DD') } : todo));
+    const newTempTodos = tempTodo.map((todo) =>
+      todo.id === id ? { ...todo, isImportant: !todo.isImportant, updatedAt: moment().format('YYYY-MM-DD') } : todo,
+    );
     setTodoState(newTodos);
-    setTempTodo(newTodos);
+    setTempTodo(newTempTodos);
   };
 
   const removeTodo = (id: number) => {
     const newTodos = todoState.filter((todo: Itodo) => todo.id !== id).map((todo: Itodo, index: number) => ({ ...todo, id: index }));
     setTodoState(newTodos);
-    setTempTodo(newTodos);
+    setTempTodo(tempTodo);
     setNextIdState(nextIdState - 1);
   };
 
@@ -91,5 +101,6 @@ export const useTodo = () => {
     createTodo,
     changeTodo,
     tempTodo,
+    setTempTodo,
   };
 };
