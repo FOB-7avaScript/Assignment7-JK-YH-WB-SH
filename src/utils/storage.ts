@@ -1,9 +1,8 @@
 import { Itodo } from 'components/types';
 
 export const loadLocalStorage = (storageKey: string) => {
-  const loadedTodoData = localStorage.getItem(storageKey);
-  const parsedTodoData = JSON.parse(loadedTodoData!);
-  return parsedTodoData;
+  const localStorageData = JSON.parse(localStorage.getItem(storageKey)!) || [];
+  return localStorageData;
 };
 
 export const saveLocalStorage = (storageKey: string, storageValue: Itodo[]) => {
