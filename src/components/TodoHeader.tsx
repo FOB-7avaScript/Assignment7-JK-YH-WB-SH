@@ -265,6 +265,7 @@ const StyledWrapper = styled.div`
   .DateInput_input {
     font-size: 16px;
     line-height: 28px;
+    text-align: center;
   }
   .DateInput_input__focused {
     border-bottom: 2px solid #33bb77;

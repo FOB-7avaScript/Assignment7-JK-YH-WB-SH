@@ -34,12 +34,12 @@ const TodoItem: FC<Props> = ({ handleRemove, toggleTodo, changeTodo, todo, isDra
           <MainText done={todo.status}>{todo.taskName}</MainText>
         </FlexBox>
       </FlexContainer>
-      <div>
+      <IconWrapper>
         <button onClick={() => handleRemove(todo.id, todo)}>
           <i className="fas fa-trash-alt" />
         </button>
         <button onClick={() => toggleTodo(todo.id)}>{todo.isImportant ? <i className="fas fa-star" /> : <i className="far fa-star" />}</button>
-      </div>
+      </IconWrapper>
     </ItemBlock>
   );
 };
@@ -62,9 +62,19 @@ const ItemBlock = styled.li<{ isDragging: boolean }>`
 const FlexContainer = styled.div`
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const IconWrapper = styled.div`
+  width: 50px;
+  display: flex;
+  margin-left: 50px;
 `;
 
 const FlexBox = styled.div`
+  display: block;
   padding: 4px 10px;
   align-items: center;
   text-align: center;
@@ -117,6 +127,11 @@ const DateDisplay = styled.div<{ done: number }>`
 `;
 
 const MainText = styled.span<{ done: number }>`
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   ${(props) =>
     props.done === 2 &&
     css`

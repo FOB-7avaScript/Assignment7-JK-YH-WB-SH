@@ -53,7 +53,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
 
   return (
     <ListWrap>
-      <StyledUl>
+      <div>
         {todos.map((todo, idx) => (
           <TodoItem
             key={todo.id}
@@ -69,7 +69,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
             {todo.taskName}
           </TodoItem>
         ))}
-      </StyledUl>
+      </div>
     </ListWrap>
   );
 };
@@ -80,10 +80,6 @@ const ListWrap = styled.div`
   padding-bottom: 48px;
   overflow-y: auto;
   overflow-x: hidden;
-`;
-
-const StyledUl = styled.ul`
-  height: 200vh;
 `;
 
 export default TodoList;
