@@ -10,7 +10,7 @@
 |이름|GitHub|담당|
 |------|---|---|
 |이제경|[jejelee94](https://github.com/jejelee94)|레이아웃, UI 보완, 배포|
-|한우빈|[hwb0218](https://github.com/hwb0218)|Tab UI, Sorting 기능 구현|
+|한우빈|[hwb0218](https://github.com/hwb0218)|Tab UI, Sorting 기능 구현, Status 필터링|
 |이상훈|[simoniful](https://github.com/simoniful) |CRUD 기능 구현, Scrum진행, Data 관리 로직|
 |장윤호|[yunojang](https://github.com/yunojang)|Drag & Drop 애니메이션 구현|
 
