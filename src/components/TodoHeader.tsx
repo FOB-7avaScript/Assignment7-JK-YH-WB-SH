@@ -1,9 +1,10 @@
-import moment from 'moment';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment';
+import { MENU_CATEGORIES } from 'utils/config';
 import { Itodo, Status } from './types';
 
 interface TodoCreateProps {
@@ -14,28 +15,29 @@ interface TodoCreateProps {
   chekedCategory: string | null;
   setTodoState: React.Dispatch<React.SetStateAction<Itodo[]>>;
   setChekedCategory: React.Dispatch<React.SetStateAction<string | null>>;
+  tempTodo: Itodo[];
 }
 
-const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, todoState, setTodoState, chekedCategory, setChekedCategory }) => {
-  const [value, setValue] = useState('');
+const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, todoState, setTodoState, chekedCategory, setChekedCategory, tempTodo }) => {
+  const [value, setValue] = useState<string>('');
   const [dueDate, setDueDate] = useState<moment.Moment | null>(moment());
   const [focused, setFocused] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const [notImportantTodo, setNotImportantTodo] = useState<Itodo[]>([]);
-  const [notSortedTodo, setNotSortedTodo] = useState<Itodo[]>([]);
+
+  const sortByTime = (selectedValue: any, todo: Itodo[]) => {
+    if (selectedValue === 'default') {
+      return setTodoState(tempTodo);
+    }
+    todo.sort((a: any, b: any) => (selectedValue === 'newest' ? a.dueDate.localeCompare(b.dueDate) : b.dueDate.localeCompare(a.dueDate)));
+    setTodoState(todo);
+  };
 
   const handleSelectBox = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.currentTarget;
     const copyTodo = [...todoState];
 
-    if (value === 'newest') {
-      copyTodo.sort((a: any, b: any) => b.dueDate.localeCompare(a.dueDate));
-      setTodoState(copyTodo);
-    }
-    if (value === 'oldest') {
-      copyTodo.sort((a: any, b: any) => a.dueDate.localeCompare(b.dueDate));
-      setTodoState(copyTodo);
-    }
+    sortByTime(value, copyTodo);
   };
 
   const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,38 +57,21 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
   const showRelatedTodo = (category: string | null) => {
     switch (category) {
       case 'All':
-        setTodoState(todoState.concat(notSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
-        setNotSortedTodo([]);
+        setTodoState(tempTodo);
         break;
       case 'ToDo': {
-        const todoInTodoState = todoState.filter((todo: Itodo) => todo.status === Status.ToDo);
-        const todoOutTodoState = todoState.filter((todo: Itodo) => todo.status !== Status.ToDo);
-        const todoInNotSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status === Status.ToDo);
-        const todoInOutSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status !== Status.ToDo);
-        setTodoState(todoInTodoState.concat(todoInNotSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
-        setNotSortedTodo(todoOutTodoState.concat(todoInOutSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
+        setTodoState(tempTodo.filter((todo: Itodo) => todo.status === Status.ToDo));
         break;
       }
       case 'Doing': {
-        const DoingInTodoState = todoState.filter((todo: Itodo) => todo.status === Status.Doing);
-        const DoingOutTodoState = todoState.filter((todo: Itodo) => todo.status !== Status.Doing);
-        const DoingInNotSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status === Status.Doing);
-        const DoingInOutSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status !== Status.Doing);
-        setTodoState(DoingInTodoState.concat(DoingInNotSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
-        setNotSortedTodo(DoingOutTodoState.concat(DoingInOutSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
+        setTodoState(tempTodo.filter((todo: Itodo) => todo.status === Status.Doing));
         break;
       }
       case 'Done': {
-        const DoneInTodoState = todoState.filter((todo: Itodo) => todo.status === Status.Done);
-        const DoneOutTodoState = todoState.filter((todo: Itodo) => todo.status !== Status.Done);
-        const DoneInNotSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status === Status.Done);
-        const DoneInOutSortedTodo = notSortedTodo.filter((todo: Itodo) => todo.status !== Status.Done);
-        setTodoState(DoneInTodoState.concat(DoneInNotSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
-        setNotSortedTodo(DoneOutTodoState.concat(DoneInOutSortedTodo).map((todo: Itodo, index: number) => ({ ...todo, id: index })));
+        setTodoState(tempTodo.filter((todo: Itodo) => todo.status === Status.Done));
         break;
       }
       default:
-        setTodoState(todoState);
         break;
     }
   };
@@ -140,7 +125,7 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
         </CircleButton>
       </HeaderForm>
       <TabWrap>
-        {menuCategories.map((category, idx) => (
+        {MENU_CATEGORIES.map((category, idx) => (
           <li key={idx} onClick={handleMenuCategory}>
             {category}
           </li>
@@ -153,8 +138,9 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
         </ImporatantCheck>
         <div>
           <select onChange={handleSelectBox}>
-            <option value="newest">최신순</option>
-            <option value="oldest">오래된순</option>
+            <option value="default">생성순</option>
+            <option value="newest">빠른순</option>
+            <option value="oldest">느린순</option>
           </select>
         </div>
       </ControlBox>
@@ -257,7 +243,5 @@ const ImporatantCheck = styled.div`
   display: flex;
   align-items: center;
 `;
-
-const menuCategories = ['All', 'ToDo', 'Doing', 'Done'];
 
 export default TodoHeader;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { saveLocalStorage, loadLocalStorage } from 'utils/storage';
 import { Itodo } from 'components/types';
 
@@ -7,7 +8,7 @@ let initialTemp: Itodo[] = [];
 
 export const useTodo = () => {
   const [todoState, setTodoState] = useState<Itodo[]>(initialTodos);
-  const [tempTodo, setTempTodo] = useState<Itodo[] | []>(loadLocalStorage('tempTodos'));
+  const [tempTodo, setTempTodo] = useState<Itodo[]>(loadLocalStorage('tempTodos'));
   const [nextIdState, setNextIdState] = useState<number>(0);
   const [chekedCategory, setChekedCategory] = useState<string | null>('');
 
@@ -17,36 +18,45 @@ export const useTodo = () => {
 
   useEffect(() => {
     saveData();
-  }, [todoState]);
+  }, [todoState, tempTodo]);
 
   const incrementNextId = () => {
     setNextIdState(nextIdState + 1);
   };
 
   const changeTodo = (id: number) => {
-    const newTodo = todoState.map((todo) => (todo.id === id ? (todo.status === 2 ? { ...todo, status: 0 } : { ...todo, status: todo.status + 1 }) : todo));
-    setTodoState(newTodo);
-    setTempTodo(newTodo);
+    const newTodos = todoState.map((todo) =>
+      todo.id === id
+        ? todo.status === 2
+          ? { ...todo, status: 0, updatedAt: moment().format('YYYY-MM-DD') }
+          : { ...todo, status: todo.status + 1, updatedAt: moment().format('YYYY-MM-DD') }
+        : todo,
+    );
+    setTodoState(newTodos);
+    setTempTodo(newTodos);
   };
 
   const toggleTodo = (id: number) => {
-    const newTodo = todoState.map((todo) => (todo.id === id ? { ...todo, isImportant: !todo.isImportant } : todo));
-    setTodoState(newTodo);
-    setTempTodo(newTodo);
+    const newTodos = todoState.map((todo) => (todo.id === id ? { ...todo, isImportant: !todo.isImportant, updatedAt: moment().format('YYYY-MM-DD') } : todo));
+    setTodoState(newTodos);
+    setTempTodo(newTodos);
   };
 
   const removeTodo = (id: number) => {
-    const newTodo = todoState.filter((todo: Itodo) => todo.id !== id).map((todo: Itodo, index: number) => ({ ...todo, id: index }));
-    setTodoState(newTodo);
-    setTempTodo(newTodo);
+    const newTodos = todoState.filter((todo: Itodo) => todo.id !== id).map((todo: Itodo, index: number) => ({ ...todo, id: index }));
+    setTodoState(newTodos);
+    setTempTodo(newTodos);
     setNextIdState(nextIdState - 1);
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = todoState.length;
-    const newTodo = todoState.concat({ ...todo, id: nextId });
-    setTodoState(newTodo);
-    setTempTodo(newTodo);
+    const nextId = tempTodo.length;
+    const newTodos = todoState.concat({ ...todo, id: nextId });
+    const newTempTodos = tempTodo.concat({ ...todo, id: nextId });
+    if (chekedCategory === 'All') {
+      setTodoState(newTodos);
+    }
+    setTempTodo(newTempTodos);
   };
 
   const loadData = () => {
@@ -80,5 +90,6 @@ export const useTodo = () => {
     removeTodo,
     createTodo,
     changeTodo,
+    tempTodo,
   };
 };
