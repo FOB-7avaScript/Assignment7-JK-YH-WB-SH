@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -127,9 +127,9 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
       </HeaderForm>
       <TabWrap>
         {MENU_CATEGORIES.map((category, idx) => (
-          <li key={idx} onClick={handleMenuCategory}>
+          <Tab key={idx} onClick={handleMenuCategory} checked={chekedCategory === category}>
             {category}
-          </li>
+          </Tab>
         ))}
       </TabWrap>
       <ControlBox>
@@ -222,15 +222,24 @@ const CircleButton = styled.button`
 const TabWrap = styled.ul`
   display: flex;
   justify-content: space-around;
-  li {
-    flex: 1;
-    padding: 15px;
-    background-color: #33bb77;
-    text-align: center;
-    border-right: 1px solid white;
-    cursor: pointer;
-    color: #ffffff;
-  }
+`;
+
+const Tab = styled.li<{ checked: boolean }>`
+  flex: 1;
+  padding: 15px;
+  background-color: #33bb77;
+  text-align: center;
+  border-right: 1px solid white;
+  cursor: pointer;
+  color: #ffffff;
+
+  ${({ checked }) =>
+    checked &&
+    css`
+      background-color: #fff;
+      color: #33bb77;
+      box-shadow: inset 0 -2px #33bb77;
+    `};
 `;
 
 const ControlBox = styled.div`
