@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { Itodo, Status } from './types';
+import { Itodo } from './types';
 import TodoItem from './TodoItem';
 
 interface TodoListProps {
@@ -79,6 +79,7 @@ const ListWrap = styled.div`
   padding: 0px;
   padding-bottom: 48px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const StyledUl = styled.ul`
