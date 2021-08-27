@@ -18,7 +18,6 @@ const GlobalStyles = createGlobalStyle`
     }
     body{
         font-family: 'NanumSquareRound', sans-serif;
-
         &::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera*/
         }
