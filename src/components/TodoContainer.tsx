@@ -31,10 +31,8 @@ const TodoContainer: FC<Props> = () => {
 const TodoWrap = styled.div`
   width: 70%;
   height: 800px;
-
   min-width: 360px;
   max-width: 700px;
-
   position: relative;
   background: white;
   border-radius: 30px;
