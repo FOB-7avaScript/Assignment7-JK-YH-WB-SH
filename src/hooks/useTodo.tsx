@@ -53,7 +53,7 @@ export const useTodo = () => {
     const nextId = tempTodo.length;
     const newTodos = todoState.concat({ ...todo, id: nextId });
     const newTempTodos = tempTodo.concat({ ...todo, id: nextId });
-    if (chekedCategory === 'All') {
+    if (chekedCategory === 'All' || chekedCategory === 'ToDo') {
       setTodoState(newTodos);
     }
     setTempTodo(newTempTodos);
