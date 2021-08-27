@@ -49,6 +49,7 @@ const ItemBlock = styled.li<{ isDragging: boolean }>`
   display: flex;
   padding: 20px 15px;
   justify-content: space-between;
+  align-items: center;
   ${({ isDragging }) =>
     isDragging &&
     `
@@ -66,6 +67,7 @@ const FlexContainer = styled.div`
 
 const FlexBox = styled.div`
   padding: 4px 10px;
+  align-items: center;
   text-align: center;
 `;
 
