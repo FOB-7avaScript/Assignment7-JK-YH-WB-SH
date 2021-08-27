@@ -34,12 +34,10 @@
 
 ## 🎬 기능구현 데모
 
-
-![sort](https://user-images.githubusercontent.com/75239459/131142513-7d55041c-bffc-4d48-b6b7-5bc76c5b0b28.gif)
-
-![important](https://user-images.githubusercontent.com/75239459/131142354-319063b9-d525-4f46-84d3-c56a0f205a73.gif)
-
-![drag](https://user-images.githubusercontent.com/75239459/131142328-efdcb997-a2ae-4ac2-b689-f21a1d25c263.gif)
+![1](https://user-images.githubusercontent.com/75239459/131143446-1e0136d8-fb8d-486a-bd92-3f0519af6508.gif)
+![2](https://user-images.githubusercontent.com/75239459/131143470-78189297-c27b-4960-bcb3-fac7facd0da9.gif)
+![3](https://user-images.githubusercontent.com/75239459/131143476-9a7ec012-8af7-400b-a531-a51f222e12c4.gif)
+![4](https://user-images.githubusercontent.com/75239459/131143484-c4ae283d-b5fe-4c56-bec5-0b7b76bc9580.gif)
 
 ## 👍🏻 구현 기능 상세
 > - 간단한 투두리스트 애플리케이션에 적합한 UI/UX를 구성할 수 있다.
