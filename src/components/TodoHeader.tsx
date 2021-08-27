@@ -106,7 +106,7 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
 
   return (
     <HeaderWrap>
-      <Title>Todo-List</Title>
+      <Title>What will you do today?</Title>
       <HeaderForm onSubmit={handleSubmit}>
         <Input autoFocus placeholder="What's need to be done?" type="text" value={value} onChange={handleChange} />
         <StyledWrapper>
@@ -154,12 +154,16 @@ const Title = styled.div`
   font-family: roboto;
   font-weight: bold;
   justify-content: center;
-  margin-top: 1em;
   color: #119955;
-  font-size: 4rem;
-  :hover {
-    transform: translateY(-10px);
-    transition: 1s;
+  font-size: 2rem;
+  padding: 2.2rem 0 2.2rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  &::selection {
+    user-select: none;
   }
 `;
 
@@ -170,7 +174,7 @@ const HeaderWrap = styled.div`
 
 const HeaderForm = styled.form`
   display: flex;
-  padding: 40px 50px 40px 30px;
+  padding: 0 50px 40px 30px;
   @media (max-width: 768px) {
     display: block;
     line-height: 3rem;
