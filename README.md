@@ -104,16 +104,16 @@
 ### 1. To-Do List App 만들기(UI & Data)
 > - 적절한 header를 만들고, widget으로 기능하도록 UI  구현
 > - 보여주고자 하는 List의 상태에 따른 데이터 구성
-```jsx
-{createdAt: "2021-08-27"
-dueDate: "2021-08-27"
-id: 0
-isImportant: false
-status: 0
-taskName: "가"
-updatedAt: "2021-08-27"
-}
-```
+  ```jsx
+  {createdAt: "2021-08-27"
+  dueDate: "2021-08-27"
+  id: 0
+  isImportant: false
+  status: 0
+  taskName: "가"
+  updatedAt: "2021-08-27"
+  }
+  ```
 > - Task 목록 조회, 새로운 Task 추가, Task 삭제 기능 구현
 > - Drag and Drop으로 Task의 순서 변경 기능 구현
 > - Tab UI를 추가적으로 구현하여 sorting 기능 다원화
