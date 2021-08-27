@@ -105,13 +105,14 @@
 > - 적절한 header를 만들고, widget으로 기능하도록 UI  구현
 > - 보여주고자 하는 List의 상태에 따른 데이터 구성
   ```jsx
-  {createdAt: "2021-08-27"
-  dueDate: "2021-08-27"
-  id: 0
-  isImportant: false
-  status: 0
-  taskName: "가"
-  updatedAt: "2021-08-27"
+  {
+   reatedAt: "2021-08-27"
+   dueDate: "2021-08-27"
+   id: 0
+   isImportant: false
+   status: 0
+   taskName: "가"
+   updatedAt: "2021-08-27"
   }
   ```
 > - Task 목록 조회, 새로운 Task 추가, Task 삭제 기능 구현
