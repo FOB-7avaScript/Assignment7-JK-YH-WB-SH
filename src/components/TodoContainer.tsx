@@ -5,10 +5,8 @@ import TodoList from './TodoList';
 import TodoFooter from './TodoFooter';
 import { useTodo } from 'hooks/useTodo';
 
-interface Props {}
-
-const TodoContainer: FC<Props> = () => {
-  const { todoState, setTodoState, chekedCategory, setChekedCategory, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo, changeTodo } =
+const TodoContainer = () => {
+  const { todoState, setTodoState, chekedCategory, setChekedCategory, nextIdState, incrementNextId, toggleTodo, removeTodo, createTodo, changeTodo, tempTodo } =
     useTodo();
 
   return (
@@ -21,6 +19,7 @@ const TodoContainer: FC<Props> = () => {
         setTodoState={setTodoState}
         chekedCategory={chekedCategory}
         setChekedCategory={setChekedCategory}
+        tempTodo={tempTodo}
       />
       <TodoList todos={todoState} toggleTodo={toggleTodo} changeTodo={changeTodo} removeTodo={removeTodo} setTodoState={setTodoState} />
       <TodoFooter todos={todoState} />
