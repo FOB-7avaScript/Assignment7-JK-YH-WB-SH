@@ -14,7 +14,6 @@ interface Props {
 }
 
 const TodoItem: FC<Props> = ({ handleRemove, toggleTodo, changeTodo, todo, isDragging, ...props }) => {
-  console.log(isDragging);
   return (
     <ItemBlock isDragging={isDragging} {...props} draggable="true">
       <FlexContainer>

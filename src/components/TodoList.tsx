@@ -12,22 +12,22 @@ interface TodoListProps {
 }
 
 const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo, setTodoState }) => {
-  const [draggingItem, setDraggingItem] = useState<number | null>(null);
-  const dragOverItem = useRef<number | null>(null);
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const dragOverIndex = useRef<number | null>(null);
 
   const onDragStart = (index: number) => {
-    setDraggingItem(index);
+    setDraggingIndex(index);
   };
 
   const onDragEnd = () => {
-    setDraggingItem(null);
+    setDraggingIndex(null);
   };
 
   const onDragOver = (index: number) => {
-    dragOverItem.current = index;
+    dragOverIndex.current = index;
 
-    if (draggingItem !== null) {
-      changeOrder(draggingItem, dragOverItem.current);
+    if (draggingIndex !== null && dragOverIndex !== null && draggingIndex !== dragOverIndex.current) {
+      changeOrder(draggingIndex, dragOverIndex.current);
     }
   };
 
@@ -37,8 +37,8 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
     const prevTodos = targetFiltedTodos.slice(0, destination);
     const afterTodos = targetFiltedTodos.slice(destination);
 
-    setDraggingItem(dragOverItem.current);
-    dragOverItem.current = null;
+    setDraggingIndex(dragOverIndex.current);
+    dragOverIndex.current = null;
 
     setTodoState([...prevTodos, sourceItem, ...afterTodos]);
   };
@@ -60,7 +60,7 @@ const TodoList: FC<TodoListProps> = ({ toggleTodo, removeTodo, todos, changeTodo
             onDragStart={() => onDragStart(idx)}
             onDragEnd={onDragEnd}
             onDragOver={() => onDragOver(idx)}
-            isDragging={idx === draggingItem}
+            isDragging={idx === draggingIndex}
             handleRemove={handleRemove}
             toggleTodo={toggleTodo}
             changeTodo={changeTodo}
