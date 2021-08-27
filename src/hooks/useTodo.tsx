@@ -10,7 +10,7 @@ export const useTodo = () => {
   const [todoState, setTodoState] = useState<Itodo[]>(initialTodos);
   const [tempTodo, setTempTodo] = useState<Itodo[]>(loadLocalStorage('tempTodos'));
   const [nextIdState, setNextIdState] = useState<number>(0);
-  const [chekedCategory, setChekedCategory] = useState<string | null>('');
+  const [chekedCategory, setChekedCategory] = useState<string | null>('All');
 
   useEffect(() => {
     loadData();
