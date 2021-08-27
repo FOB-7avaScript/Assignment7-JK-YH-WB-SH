@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
+import { saveLocalStorage, loadLocalStorage } from 'utils/storage';
 import { Itodo } from 'components/types';
 
 let initialTodos: Itodo[] = [];
 let initialTemp: Itodo[] = [];
 
 export const useTodo = () => {
-  const [todoState, setTodoState] = useState(initialTodos);
-  const [sortedState, setSortedState] = useState<Itodo[]>(initialTodos);
-  const [temp, setTemp] = useState(JSON.parse(localStorage.getItem('temp')!) || []);
-  const [nextIdState, setNextIdState] = useState(0);
+  const [todoState, setTodoState] = useState<Itodo[]>(initialTodos);
+  const [tempTodo, setTempTodo] = useState<Itodo[] | []>(loadLocalStorage('tempTodos'));
+  const [nextIdState, setNextIdState] = useState<number>(0);
   const [chekedCategory, setChekedCategory] = useState<string | null>('');
 
   useEffect(() => {
@@ -27,74 +26,59 @@ export const useTodo = () => {
   const changeTodo = (id: number) => {
     const newTodo = todoState.map((todo) => (todo.id === id ? (todo.status === 2 ? { ...todo, status: 0 } : { ...todo, status: todo.status + 1 }) : todo));
     setTodoState(newTodo);
-    setTemp(newTodo);
+    setTempTodo(newTodo);
   };
 
   const toggleTodo = (id: number) => {
     const newTodo = todoState.map((todo) => (todo.id === id ? { ...todo, isImportant: !todo.isImportant } : todo));
     setTodoState(newTodo);
-    setTemp(newTodo);
+    setTempTodo(newTodo);
   };
 
   const removeTodo = (id: number) => {
     const newTodo = todoState.filter((todo: Itodo) => todo.id !== id).map((todo: Itodo, index: number) => ({ ...todo, id: index }));
     setTodoState(newTodo);
-    setTemp(newTodo);
+    setTempTodo(newTodo);
     setNextIdState(nextIdState - 1);
   };
 
   const createTodo = (todo: Itodo) => {
-    const newTodo = todoState.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
-    setTodoState(newTodo);
     const nextId = todoState.length;
-    setTodoState((prevState) =>
-      prevState.concat({
-        ...todo,
-        id: nextId,
-      }),
-    );
-    setTemp(newTodo.concat({ ...todo, id: nextId }));
+    const newTodo = todoState.concat({ ...todo, id: nextId });
+    setTodoState(newTodo);
+    setTempTodo(newTodo);
   };
 
   const loadData = () => {
-    let data: any = localStorage.getItem('todos');
-    let _temp: any = localStorage.getItem('temp');
-    if (_temp === null || _temp === undefined || data === undefined || data === null) {
-      data = JSON.stringify([]);
-      _temp = JSON.stringify([]);
-    }
-    initialTodos = JSON.parse(data);
-    initialTemp = JSON.parse(_temp);
+    initialTodos = loadLocalStorage('todos');
+    initialTemp = loadLocalStorage('tempTodos');
 
     if (initialTodos.length === 0) {
-      return setTodoState(temp);
+      return setTodoState(tempTodo);
     }
     if (initialTodos && initialTodos.length >= 1) {
       setNextIdState(initialTodos.length);
-      initialTodos = initialTodos.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
-      return setTodoState(temp);
+      return setTodoState(tempTodo);
     }
     setTodoState(initialTodos);
   };
 
   const saveData = () => {
-    const newTodo = todoState.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
-    localStorage.setItem('todos', JSON.stringify(newTodo));
-    localStorage.setItem('temp', JSON.stringify(temp));
+    const sortedTodo = todoState.map((todo: Itodo, index: number) => ({ ...todo, id: index }));
+    saveLocalStorage('todos', sortedTodo);
+    saveLocalStorage('tempTodos', tempTodo);
   };
 
   return {
     todoState,
-    nextIdState,
-    incrementNextId,
-    changeTodo,
-    toggleTodo,
-    removeTodo,
-    createTodo,
-    sortedState,
-    setSortedState,
     setTodoState,
     chekedCategory,
     setChekedCategory,
+    nextIdState,
+    incrementNextId,
+    toggleTodo,
+    removeTodo,
+    createTodo,
+    changeTodo,
   };
 };
