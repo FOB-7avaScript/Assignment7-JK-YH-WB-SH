@@ -165,6 +165,8 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
 
 const Title = styled.div`
   display: flex;
+  font-family: roboto;
+  font-weight: bold;
   justify-content: center;
   margin-top: 1em;
   color: #119955;
@@ -183,6 +185,11 @@ const HeaderWrap = styled.div`
 const HeaderForm = styled.form`
   display: flex;
   padding: 40px 50px 40px 30px;
+  @media (max-width: 768px) {
+    display: block;
+    line-height: 3rem;
+    padding-bottom: 0px;
+  }
 `;
 
 const Input = styled.input`
@@ -200,43 +207,29 @@ const Input = styled.input`
 `;
 
 const CircleButton = styled.button`
-  @media (min-width: 768px) {
-    background: #ffffff;
-    width: 50px;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    font-size: 60px;
-    left: 50%;
-    transform: translate(50%, 0%);
-    color: white;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .fa-plus-circle {
-      color: #33bb77;
-    }
+  background: #ffffff;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  left: 50%;
+  transform: translate(50%, 0%);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .fa-plus-circle {
+    color: #33bb77;
   }
   @media (max-width: 768px) {
-    background: #ffffff;
-    align-items: center;
-    justify-content: center;
-    font-size: 60px;
-    left: 30%;
-    transform: translate(50%, 0%);
-    color: white;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .fa-plus-circle {
-      color: #33bb77;
-    }
+    position: relative;
+    font-size: 40px;
+    left: 80%;
+    bottom: 6.3rem;
   }
 `;
 
@@ -264,31 +257,26 @@ const ControlBox = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  @media (min-width: 768px) {
-    .SingleDatePickerInput__withBorder {
-      height: 52px;
-    }
-    .DateInput {
-      height: 50px;
-    }
-    .DateInput_input {
-      font-size: 16px;
-      line-height: 28px;
-    }
-    .DateInput_input__focused {
-      border-bottom: 2px solid #33bb77;
-    }
-    .CalendarDay__selected,
-    .CalendarDay__selected:active,
-    .CalendarDay__selected:hover {
-      background-color: #33bb77;
-    }
-    .CalendarDay {
-      vertical-align: middle;
-    }
+  .SingleDatePickerInput__withBorder {
+    height: 52px;
   }
-  @media (max-width: 768px) {
-    display: none;
+  .DateInput {
+    height: 50px;
+  }
+  .DateInput_input {
+    font-size: 16px;
+    line-height: 28px;
+  }
+  .DateInput_input__focused {
+    border-bottom: 2px solid #33bb77;
+  }
+  .CalendarDay__selected,
+  .CalendarDay__selected:active,
+  .CalendarDay__selected:hover {
+    background-color: #33bb77;
+  }
+  .CalendarDay {
+    vertical-align: middle;
   }
 `;
 
