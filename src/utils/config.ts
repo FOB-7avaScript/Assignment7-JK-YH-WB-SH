@@ -1,1 +1,1 @@
-export const a = 'a';
+export const MENU_CATEGORIES = ['All', 'ToDo', 'Doing', 'Done'];
