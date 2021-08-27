@@ -34,6 +34,11 @@
 
 ## 🎬 기능구현 데모
 
+![drag](https://user-images.githubusercontent.com/75239459/131142328-efdcb997-a2ae-4ac2-b689-f21a1d25c263.gif)
+
+![important](https://user-images.githubusercontent.com/75239459/131142354-319063b9-d525-4f46-84d3-c56a0f205a73.gif)
+
+![sort](https://user-images.githubusercontent.com/75239459/131142513-7d55041c-bffc-4d48-b6b7-5bc76c5b0b28.gif)
 
 ## 👍🏻 구현 기능 상세
 > - 간단한 투두리스트 애플리케이션에 적합한 UI/UX를 구성할 수 있다.
