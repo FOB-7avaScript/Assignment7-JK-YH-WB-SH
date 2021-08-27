@@ -29,7 +29,7 @@ const TodoContainer = () => {
 
 const TodoWrap = styled.div`
   width: 70%;
-  height: 90vh;
+  height: 95vh;
   min-width: 360px;
   max-width: 700px;
   position: absolute;
