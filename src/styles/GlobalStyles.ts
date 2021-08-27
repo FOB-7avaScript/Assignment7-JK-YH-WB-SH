@@ -16,6 +16,12 @@ const GlobalStyles = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
     }
+    @font-face {
+        font-family: 'roboto';
+        src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
     body{
         font-family: 'NanumSquareRound', sans-serif;
         &::-webkit-scrollbar {

@@ -106,6 +106,7 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
 
   return (
     <HeaderWrap>
+      <Title>Todo-List</Title>
       <HeaderForm onSubmit={handleSubmit}>
         <Input autoFocus placeholder="What's need to be done?" type="text" value={value} onChange={handleChange} />
         <StyledWrapper>
@@ -148,6 +149,20 @@ const TodoHeader: FC<TodoCreateProps> = ({ nextId, createTodo, incrementNextId, 
   );
 };
 
+const Title = styled.div`
+  display: flex;
+  font-family: roboto;
+  font-weight: bold;
+  justify-content: center;
+  margin-top: 1em;
+  color: #119955;
+  font-size: 4rem;
+  :hover {
+    transform: translateY(-10px);
+    transition: 1s;
+  }
+`;
+
 const HeaderWrap = styled.div`
   width: 100%;
   border-bottom: 1px solid #eeeeee;
@@ -156,12 +171,17 @@ const HeaderWrap = styled.div`
 const HeaderForm = styled.form`
   display: flex;
   padding: 40px 50px 40px 30px;
+  @media (max-width: 768px) {
+    display: block;
+    line-height: 3rem;
+    padding-bottom: 0px;
+  }
 `;
 
 const Input = styled.input`
   padding: 10px;
   border: 1px solid #dddddd;
-  width: 70%;
+  width: 80%;
   line-height: 20px;
   outline: none;
   font-size: 14px;
@@ -191,6 +211,12 @@ const CircleButton = styled.button`
   .fa-plus-circle {
     color: #33bb77;
   }
+  @media (max-width: 768px) {
+    position: relative;
+    font-size: 40px;
+    left: 80%;
+    bottom: 6.3rem;
+  }
 `;
 
 const TabWrap = styled.ul`
@@ -201,6 +227,7 @@ const TabWrap = styled.ul`
     padding: 15px;
     background-color: #33bb77;
     text-align: center;
+    border-right: 1px solid white;
     cursor: pointer;
     color: #ffffff;
   }
