@@ -1,7 +1,7 @@
 # Wanted Front-end onBoarding # 8
 
 ## Demo Link
-🔗 Demo Page : https://modoo-company.netlify.app/
+🔗 Demo Page : [모두 컴퍼니 : To-Do-List](https://modu-company.netlify.app/)
 
 ## 💬 프로젝트 개요
 모두 컴퍼니 : To-Do-List 애플리케이션
